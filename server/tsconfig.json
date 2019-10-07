@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+      "target": "es2017",
+      "module": "commonjs",
+      "outDir": "./dist/",
+      "types": [
+        "es6-promise",
+        "jasmine",
+        "node"
+      ],
+      "strict": true,
+      "strictPropertyInitialization": false, // disabled due to repositories injections
+      "skipLibCheck": true,
+      "sourceMap": true,
+      "allowSyntheticDefaultImports": true
+    },
+    "include": [
+      "src/**/*", "config"
+    ],
+    "exclude": [
+      "dist",
+      "node_modules"
+    ]
+}  
