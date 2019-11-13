@@ -1,15 +1,21 @@
 import React from 'react';
 import './App.css';
-import BarComponent from './BarComponent';
-import MainComponent from './MainComponent';
+import ProfileComponent from './ProfileComponent';
+import HomeComponent from './HomeComponent';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-const App: React.FC = () => {
-  return (
-    <App>
-    <BarComponent/>
-    <MainComponent />
-    </App>          
-  );
+class App extends React.Component {
+
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <Route exact path='/' component={HomeComponent}/>
+          <Route path='/profile' component={ProfileComponent}/>
+        </Switch>
+      </Router>
+    ) 
+  }
 }
 
 export default App;

@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function ButtonAppBar() {
+export default function ButtonAppBar(props: any) {
   const classes = useStyles();
 
   return (
@@ -32,9 +32,8 @@ export default function ButtonAppBar() {
             {/* <MenuIcon /> */}
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Animatr
+          {props.title}
           </Typography>
-          <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
     </div>
