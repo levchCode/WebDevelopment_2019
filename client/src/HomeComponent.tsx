@@ -12,7 +12,7 @@ export default class HomeComponent extends Component {
         <BarComponent title="Animatr"/>
         <h1>Популярное</h1>
         <PopularComponent />
-        <Link to="/profile/leVch">Профиль</Link>
+        <Link to="/record">Записать видео</Link>
       </div>
     );
   }

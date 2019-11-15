@@ -15,11 +15,15 @@ const useStyles = makeStyles({
   },
 });
 
+
+
 export default function MediaCard(vid:any) {
+
+
   const classes = useStyles();
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} onClick={()=>{window.location.href = "/watch/"+ vid.id}}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
@@ -28,10 +32,10 @@ export default function MediaCard(vid:any) {
         />
         <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              {vid.title}
+            {vid.title}
             </Typography>
            <Typography variant="body2" color="textSecondary" component="p">
-             {vid.username}
+           {vid.username}
            </Typography>
            <Typography variant="body2" color="textSecondary" component="p">
              {vid.views} просмотров
