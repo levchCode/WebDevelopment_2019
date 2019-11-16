@@ -18,12 +18,12 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function Record(props: any) {
+export default function Record(data: any) {
     const classes = useStyles();
     
     return (
       <div className={classes.root}>
-          {/* Название, описание видео + проверка редактируемо или нет */}
+          {/* Название (data.title), описание видео (data.desc) + проверка редактируемо или нет (data.editable) */}
       </div>
     );
   }

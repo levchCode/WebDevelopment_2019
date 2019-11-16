@@ -3,6 +3,7 @@ import React from "react";
 import BarComponent from "./BarComponent"
 import ReplayComponent from "./ReplayComponent"
 import DescriptionComponent from "./DescriptionComponent"
+import vid from './data.json';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,12 +21,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Record(props: any) {
     const classes = useStyles();
+
+    let video = vid;
     
     return (
       <div className={classes.root}>
-        <BarComponent title="Видео"/>
-        <ReplayComponent/>
-        <DescriptionComponent editable={false} />
+        <BarComponent title={video.title}/>
+        <ReplayComponent vid={video.animation}/>
+        <DescriptionComponent editable={false} vid_title={video.title} vid_desc={video.desc} />
       </div>
     );
   }
