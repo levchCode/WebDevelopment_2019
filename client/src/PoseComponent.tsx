@@ -1,5 +1,7 @@
 import { makeStyles, createStyles, Theme } from "@material-ui/core";
 import React from "react";
+import P5Wrapper from 'react-p5-wrapper';
+import PoseFrame from './sketches/PoseFrame';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,7 +25,7 @@ export default function Record(props: any) {
     
     return (
       <div className={classes.root}>
-       {/* Контейнер с оценкой позы и кнопка "Записать" */}
+       <P5Wrapper sketch={PoseFrame}></P5Wrapper>
       </div>
     );
   }
