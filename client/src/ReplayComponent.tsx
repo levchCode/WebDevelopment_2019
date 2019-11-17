@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Replay(props: any) {
     const classes = useStyles();
-
     let recording = vid;
 
     return (
@@ -28,4 +27,5 @@ export default function Replay(props: any) {
           <P5Wrapper sketch={VideoFrame} anim={recording.animation}></P5Wrapper>
       </div>
     );
+    
   }

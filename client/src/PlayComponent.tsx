@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Record(props: any) {
     const classes = useStyles();
+    //let params: any = useParams();
+
+    //Типо запрос к бекэнду по params.id видео
 
     let video = vid;
     

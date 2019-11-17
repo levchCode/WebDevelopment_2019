@@ -27,7 +27,7 @@ export default function MediaCard(vid:any) {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image="https://i.imgur.com/81qyN1y.jpg"
+          image={vid.thumbnail}
           title="Видео"
         />
         <CardContent>

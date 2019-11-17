@@ -20,8 +20,8 @@ export default function PaperSheet() {
   const classes = useStyles();
 
   let videos = [
-      {"id":1, "title":"Тест", "username": "leVch", "views":1000, "likes":10, "thumbnail":"image_URL"},
-      {"id":2, "title":"Тест2", "username": "leVch2", "views":10020, "likes":120, "thumbnail":"image_URL"}
+      {"id":1, "title":"Тест", "username": "leVch", "views":1000, "likes":10, "thumbnail":"https://i.imgur.com/v2zH5xk.jpeg"},
+      {"id":2, "title":"Тест2", "username": "leVch2", "views":10020, "likes":120, "thumbnail":"https://i.imgur.com/81qyN1y.jpg"}
     ];
 
   return (

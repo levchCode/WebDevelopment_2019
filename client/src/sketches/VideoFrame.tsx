@@ -2,17 +2,24 @@ export default function sketch(p:any){
     let anim: any;
     let manage_button: any;
     let stopper: boolean;
+    let w = 320;
+    let h = 240;
 
     p.setup = () => {
-      p.createCanvas(640, 480);
+      p.createCanvas(w, h);
       p.noStroke();
       p.frameRate(30);
+
       manage_button = p.createButton("&#9658;")
       manage_button.mousePressed(manage_video)
     }
 
     let manage_video = () => {
         stopper = !stopper;
+
+        if (localStorage.getItem("anim") !== null) {
+            anim = JSON.parse(localStorage.getItem("anim") || "[]");
+        }
 
         if (!stopper)
         {
