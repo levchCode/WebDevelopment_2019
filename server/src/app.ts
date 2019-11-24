@@ -1,19 +1,28 @@
 import express = require('express');
+import mg = require('mongodb');
+import config from './config.json';
 
 const app = express();
-const port = 9000; // default port to listen
+const port = 9000;
 
-// define a route handler for the default home page
+const MongoClient = mg.MongoClient;
+const uri = config.url;
+
 app.get('/', (req: any, res: any) => {
-    res.send('Hello world!');
+    res.send('Animatr backend, nothing to see here, folks!');
 });
 
-app.get('/test', (req: any, res: any) => {
-    res.send({
-        data: ['Test data!',
-            'Test data1', 'Test data2'],
-        date: new Date(),
-    });
+app.get('/profile', (req: any, res: any) => {
+
+    MongoClient.connect(uri, (err: any, client: any) => {
+
+        const collection = client.db('anim').collection('users');
+        collection.find().toArray()
+        .then((data: any) => {
+            res.send({d: data});
+            client.close();
+        });
+      });
 });
 
 // start the Express server

@@ -16,10 +16,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4",
-    "ts-node-dev": "^1.0.0-pre.40",
     "@types/bluebird": "^3.5.27",
-    "@types/validator": "^10.11.1"
+    "@types/validator": "^10.11.1",
+    "express": "^4.16.4",
+    "mongodb": "^3.3.4",
+    "ts-node-dev": "^1.0.0-pre.40"
   },
   "devDependencies": {
     "@types/es6-promise": "^3.3.0",
