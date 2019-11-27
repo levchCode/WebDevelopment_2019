@@ -19,12 +19,15 @@ app.get('/', (req, res) => {
 app.get('/profile', (req, res) => {
     const u_id = req.body.user_id;
     MongoClient.connect(uri, (err, client) => {
-        const collection = client.db('anim').collection('videos');
-        collection.aggregate([
+        const video_collection = client.db('anim').collection('videos');
+        const user_collection = client.db('anim').collection('users');
+        video_collection.aggregate([
             { $match: { user_id: mongodb_1.ObjectId(u_id) } },
             { $group: { _id: '$user_id', total_views: { $sum: '$views' }, total_likes: { $sum: '$likes' } } },
-        ]).toArray().then((data) => {
-            res.send(data);
+        ]).toArray().then(async (viewlikes) => {
+            const uname = await user_collection.findOne({ _id: mongodb_1.ObjectId(u_id) });
+            const vidlist = await video_collection.find({ user_id: mongodb_1.ObjectId(u_id) }).toArray();
+            res.send({ username: uname, videos: vidlist, vl: viewlikes });
             client.close();
         });
     });
