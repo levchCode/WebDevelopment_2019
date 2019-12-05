@@ -1,12 +1,11 @@
-import { makeStyles, createStyles, Theme, Button } from "@material-ui/core";
+import { createStyles, Theme, Button, withStyles } from "@material-ui/core";
 import React from "react";
 import BarComponent from "./BarComponent"
 import DescriptionComponent from "./DescriptionComponent"
 import PoseComponent from "./PoseComponent"
 import ReplayComponent from "./ReplayComponent"
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const styles = (theme:Theme) => createStyles({
     root: {
       flexGrow: 1,
     },
@@ -22,16 +21,25 @@ const useStyles = makeStyles((theme: Theme) =>
     el: {
       float:"left"
     },
-  }),
-);
+})
 
-let upload = () =>{
-  //let data = localStorage.getItem("anim");
-}
 
-export default function Record(props: any) {
-    const classes = useStyles();
-    localStorage.removeItem("anim")
+class RecordComponent extends React.Component<any,any> {
+
+  constructor(props:any){
+    super(props);
+    localStorage.removeItem("anim");
+  } 
+
+  upload()
+  {
+    //let data = localStorage.getItem("anim");
+  }
+
+  render()
+  {
+    const { classes } = this.props;
+    
     return (
       <div className={classes.root}>
         <BarComponent title="Записать анимацию"/>
@@ -44,9 +52,12 @@ export default function Record(props: any) {
         </div>
 
         <DescriptionComponent editable={true} />
-        <Button variant="contained" color="primary" className={classes.button} onClick={upload}>
+        <Button variant="contained" color="primary" className={classes.button} onClick={this.upload}>
         Опубликовать
         </Button>
       </div>
     );
   }
+}
+
+export default withStyles(styles)(RecordComponent);

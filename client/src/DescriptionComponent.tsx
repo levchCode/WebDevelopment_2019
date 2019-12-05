@@ -1,8 +1,7 @@
-import { makeStyles, createStyles, Theme} from "@material-ui/core";
+import { createStyles, Theme, withStyles } from "@material-ui/core";
 import React from "react";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const styles = (theme:Theme) => createStyles({
     root: {
       flexGrow: 1,
     },
@@ -15,15 +14,20 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       flexGrow: 1,
     },
-  }),
-);
+});
 
-export default function Record(data: any) {
-    const classes = useStyles();
+class DescriptionComponent extends React.Component<any,any> {
     
-    return (
-      <div className={classes.root}>
-          {/* Название (data.title), описание видео (data.desc) + проверка редактируемо или нет (data.editable) */}
-      </div>
-    );
+  render()
+  {
+    const { classes } = this.props;
+    
+      return (
+        <div className={classes.root}>
+            {/* Название (data.title), описание видео (data.desc) + проверка редактируемо или нет (data.editable) */}
+        </div>
+      );
   }
+}
+
+export default withStyles(styles)(DescriptionComponent);

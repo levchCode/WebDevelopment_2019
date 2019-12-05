@@ -4,7 +4,7 @@ import BarComponent from './BarComponent'
 
 
 export default class HomeComponent extends Component {
-  
+    
   render() {
     return (
       <div className="App">

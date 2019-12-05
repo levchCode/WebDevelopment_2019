@@ -1,5 +1,4 @@
 import * as ml5 from "ml5";
-import "p5/lib/addons/p5.dom";
 
 export default function sketch(p:any){
     let start_button:any, stop_button: any;
@@ -11,6 +10,7 @@ export default function sketch(p:any){
     let recording: any = [];
     let w = 320;
     let h = 240;
+    let timeout: any;
 
     p.setup = () => {
       p.frameRate(30);
@@ -19,7 +19,10 @@ export default function sketch(p:any){
       video.size(w, h);
       video.hide();
 
-      poseNet = ml5.poseNet(video, ()=>{console.log('Model Loaded'); ready=true;});
+      poseNet = ml5.poseNet(video, ()=>{ 
+          console.log('Model Loaded'); 
+          ready=true;
+      });
 
       poseNet.on('pose', function (results:any) {
         poses = results;
@@ -31,8 +34,6 @@ export default function sketch(p:any){
       stop_button.mousePressed(stop_recording)
       stop_button.attribute('disabled', '');
     }
-
-    let timeout: any;
 
     let start_recording = () => {
        stopper = false;
@@ -61,13 +62,11 @@ export default function sketch(p:any){
                 recording.push(poses[0].pose.keypoints)
             }
 
-            // Loop through all the poses detected
+            // Пройтись по всем обнаруженным позам
             for (let i = 0; i < poses.length; i++) {
-                // For each pose detected, loop through all the keypoints
+                // Для каждой позы, пройтись по точкам
                 for (let j = 0; j < poses[i].pose.keypoints.length; j++) {
-                    // A keypoint is an object describing a body part (like rightArm or leftShoulder)
                     let keypoint = poses[i].pose.keypoints[j];
-                    // Only draw an ellipse is the pose probability is bigger than 0.2
                     if (keypoint.score > 0.2) {
                         p.fill(255, 0, 0);
                         p.noStroke();
@@ -77,5 +76,4 @@ export default function sketch(p:any){
             }
         }
     }
-
 }

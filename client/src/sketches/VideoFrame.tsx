@@ -4,6 +4,7 @@ export default function sketch(p:any){
     let stopper: boolean;
     let w = 320;
     let h = 240;
+    let i = 0;
 
     p.setup = () => {
       p.createCanvas(w, h);
@@ -32,7 +33,6 @@ export default function sketch(p:any){
         
     }
 
-    let i = 0;
     p.draw = () => {
 
         if (i === anim.length-1) {
@@ -49,10 +49,7 @@ export default function sketch(p:any){
             }
         }
         
-        if (stopper)
-        {
-            i++;
-        }
+        if (stopper){ i++; }
     }
 
     p.myCustomRedrawAccordingToNewPropsHandler = function(newProps:any){

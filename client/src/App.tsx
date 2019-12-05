@@ -13,7 +13,7 @@ class App extends React.Component {
       <Router>
         <Switch>
           <Route exact path='/' component={HomeComponent}/>
-          <Route path='/profile/:user' component={ProfileComponent}/>
+          <Route path='/profile/:user_id' component={ProfileComponent}/>
           <Route path='/record' component={RecordComponent}/>
           <Route path='/watch/:id' component={PlayComponent}/>
         </Switch>

@@ -1,11 +1,10 @@
-import { makeStyles, createStyles, Theme } from "@material-ui/core";
+import { createStyles, Theme, withStyles } from "@material-ui/core";
 import React from "react";
 import P5Wrapper from 'react-p5-wrapper';
 import VideoFrame from './sketches/VideoFrame';
 import vid from './data.json';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const styles = (theme:Theme) => createStyles({
     root: {
       flexGrow: 1,
     },
@@ -15,17 +14,28 @@ const useStyles = makeStyles((theme: Theme) =>
     input: {
       display: 'none',
     }
-  }),
-);
+})
 
-export default function Replay(props: any) {
-    const classes = useStyles();
-    let recording = vid;
+class ReplayComponent extends React.Component<any,any> {
 
-    return (
-      <div className={classes.root}>
-          <P5Wrapper sketch={VideoFrame} anim={recording.animation}></P5Wrapper>
-      </div>
-    );
+    recording:any;
+
+    constructor(props:any){
+      super(props);
+      this.recording = this.props;
+    } 
+
+    render()
+    {
+      this.recording = vid;
+      const { classes } = this.props;
+      return (
+        <div className={classes.root}>
+          <P5Wrapper sketch={VideoFrame} anim={this.recording.animation}></P5Wrapper>
+        </div>
+      );
+    }
     
   }
+
+export default withStyles(styles)(ReplayComponent);

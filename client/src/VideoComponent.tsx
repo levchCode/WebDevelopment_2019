@@ -1,12 +1,12 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles({
+const styles = (theme:Theme) => createStyles({
   card: {
     maxWidth: 345,
   },
@@ -15,77 +15,43 @@ const useStyles = makeStyles({
   },
 });
 
+class VideoComponent extends React.Component<any,any> {
 
+  vid: any;
+  
+  constructor(props:any){
+    super(props);
+    this.vid = this.props;
+  } 
 
-export default function MediaCard(vid:any) {
-
-
-  const classes = useStyles();
-
-  return (
-    <Card className={classes.card} onClick={()=>{window.location.href = "/watch/"+ vid.id}}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image={vid.thumbnail}
-          title="Видео"
-        />
-        <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-            {vid.title}
-            </Typography>
-           <Typography variant="body2" color="textSecondary" component="p">
-           {vid.username}
+  render() {
+    const { classes } = this.props;
+    return (
+      <Card className={classes.card} onClick={()=>{window.location.href = "/watch/"+ this.vid.id}}>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            image={this.vid.thumbnail}
+            title="Видео"
+          />
+          <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+              {this.vid.title}
+              </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+           {this.vid.username}
            </Typography>
            <Typography variant="body2" color="textSecondary" component="p">
-             {vid.views} просмотров
+             {this.vid.views} просмотров
            </Typography>
            <Typography variant="body2" color="textSecondary" component="p">
-             {vid.likes} лайков
+             {this.vid.likes} лайков
            </Typography>
          </CardContent>
        </CardActionArea>
      </Card>
   );
+  }
 }
 
-
-// class VideoComponent extends React.Component {
-//     vid: any;
-
-//     constructor(props:any){
-//         super(props);
-//         this.vid = this.props;
-//     } 
-
-//     render() {
-
-//         return (
-//             <Card className="card">
-//             <CardActionArea>
-//                 <CardMedia
-//                     className="video"
-//                     image={this.vid.thumbnail}
-//                     title="Video"
-//                 />
-//             <CardContent>
-//             <Typography gutterBottom variant="h5" component="h2">
-//            {this.vid.title}
-//           </Typography>
-//           <Typography variant="body2" color="textSecondary" component="p">
-//             {this.vid.username}
-//           </Typography>
-//           <Typography variant="body2" color="textSecondary" component="p">
-//             {this.vid.views} просмотров
-//           </Typography>
-//           <Typography variant="body2" color="textSecondary" component="p">
-//             {this.vid.likes} лайков
-//           </Typography>
-//         </CardContent>
-//       </CardActionArea>
-//     </Card>
-//         );
-//     }
-// }
-
-// export default VideoComponent;
+export default withStyles(styles)(VideoComponent);
