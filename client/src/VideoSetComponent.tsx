@@ -14,23 +14,18 @@ const styles = (theme:Theme) => createStyles({
     },
 });
 
-class PopularComponent extends React.Component<any,any> {
+class VideoSetComponent extends React.Component<any,any> {
   
   state: any;
 
-  constructor(props:any){
+  constructor(props: any)
+  {
     super(props);
-    this.state = { data: [] };
-  } 
+    this.state = {videos:[]};
+  }
 
-  componentDidMount() {
-    //Типо получили данные
-    let videos = [
-      {"id":1, "title":"Тест", "username": "leVch", "views":1000, "likes":10, "thumbnail":"https://i.imgur.com/v2zH5xk.jpeg"},
-      {"id":2, "title":"Тест2", "username": "leVch2", "views":10020, "likes":120, "thumbnail":"https://i.imgur.com/81qyN1y.jpg"}
-    ];
-
-    this.setState({data: videos});
+  componentWillReceiveProps(ps:any) {
+    this.setState({videos:ps.vids});
   }
 
   render()
@@ -39,7 +34,7 @@ class PopularComponent extends React.Component<any,any> {
     return (
       <Paper className={classes.paper}>
           <Grid container className={classes.root} spacing={2}>
-              {this.state.data.map((vid: any) => (
+              {this.state.videos.map((vid: any) => (
                   <Grid key={vid.id} item>
                       <VideoComponent {...vid}/> 
                   </Grid>
@@ -50,4 +45,4 @@ class PopularComponent extends React.Component<any,any> {
   }
 }
 
-export default withStyles(styles)(PopularComponent);
+export default withStyles(styles)(VideoSetComponent);

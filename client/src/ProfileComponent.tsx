@@ -30,7 +30,7 @@ class ProfileComponent extends React.Component<any,any> {
   
   render()
   {
-    const { classes } = this.props;
+    //const { classes } = this.props;
     return (
       <BarComponent title={"Профиль: " + this.state.data.username} />
       // Отобразить суммарно лайки, просмотры и список видео пользователя
