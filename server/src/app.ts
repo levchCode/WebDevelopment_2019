@@ -20,19 +20,36 @@ app.get('/api/', (req: any, res: any) => {
 // Профиль: должен вернуть имя пользователя, общее кол-во просмотров и лайков и список видео пользователя по user_id
 app.get('/api/profile', (req: any, res: any) => {
 
+    const data: {[k: string]: any} = {};
     const u_id = req.body.user_id;
 
     MongoClient.connect(uri, (err: any, client: any) => {
 
         const video_collection = client.db('anim').collection('videos');
         const user_collection = client.db('anim').collection('users');
+
         video_collection.aggregate([
                 { $match: { user_id: ObjectId(u_id) }},
                 { $group: { _id: '$user_id', total_views: { $sum: '$views' }, total_likes: { $sum: '$likes' }}},
         ]).toArray().then(async (viewlikes: any) => {
-            const uname = await user_collection.findOne({_id: ObjectId(u_id)});
-            const vidlist = await video_collection.find({user_id: ObjectId(u_id)}).toArray();
-            res.send({username: uname, videos: vidlist, vl: viewlikes});
+
+            const user = await user_collection.findOne({_id: ObjectId(u_id)});
+            const vidlist = await video_collection.aggregate([
+            { $project : { anim : 0 } },
+            {
+                $lookup: {
+                        from: 'users',
+                        localField: 'user_id',
+                        foreignField: '_id',
+                        as: 'user',
+                    },
+            }]).toArray();
+
+            data.username = user;
+            data.total_views = viewlikes[0].total_views;
+            data.total_likes = viewlikes[0].total_likes;
+            data.videos = vidlist;
+            res.send(data);
 
             client.close();
         });
@@ -61,6 +78,10 @@ app.post('/api/upload', (req: any, res: any) => {
 
     const video_payload = req.body;
 
+    video_payload.likes = 0;
+    video_payload.views = 0;
+    video_payload.user_id = ObjectId(video_payload.user_id);
+
     MongoClient.connect(uri, (err: any, client: any) => {
         const collection = client.db('anim').collection('videos');
         collection.insertOne(video_payload).then((result: any) => {
@@ -76,16 +97,26 @@ app.get('/api/popular', (req: any, res: any) => {
 
     MongoClient.connect(uri, (err: any, client: any) => {
 
-        const collection = client.db('anim').collection('videos');
-        collection.find().sort({views: -1}).limit(10).toArray()
-        .then((data: any) => {
-            res.send(data);
-            client.close();
-        });
-      });
+        const video_collection = client.db('anim').collection('videos');
+
+        video_collection.aggregate([
+            { $project : { anim : 0 } },
+            { $sort: { views: -1 }},
+            { $lookup:
+                {
+                    from: 'users',
+                    localField: 'user_id',
+                    foreignField: '_id',
+                    as: 'user',
+                },
+            }]).limit(10).toArray().then((data: any) => {
+                res.send(data);
+                client.close();
+            });
+    });
 });
 
-// {+} Засчитать просмотр или лайк
+// {+} Засчитать просмотр или лайк (надо переделать, глупая система подсчета)
 app.post('/api/viewlike', (req: any, res: any) => {
 
     const data = req.body;

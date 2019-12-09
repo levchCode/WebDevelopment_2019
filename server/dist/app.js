@@ -19,6 +19,7 @@ app.get('/api/', (req, res) => {
 });
 // Профиль: должен вернуть имя пользователя, общее кол-во просмотров и лайков и список видео пользователя по user_id
 app.get('/api/profile', (req, res) => {
+    const data = {};
     const u_id = req.body.user_id;
     MongoClient.connect(uri, (err, client) => {
         const video_collection = client.db('anim').collection('videos');
@@ -27,9 +28,23 @@ app.get('/api/profile', (req, res) => {
             { $match: { user_id: mongodb_1.ObjectId(u_id) } },
             { $group: { _id: '$user_id', total_views: { $sum: '$views' }, total_likes: { $sum: '$likes' } } },
         ]).toArray().then(async (viewlikes) => {
-            const uname = await user_collection.findOne({ _id: mongodb_1.ObjectId(u_id) });
-            const vidlist = await video_collection.find({ user_id: mongodb_1.ObjectId(u_id) }).toArray();
-            res.send({ username: uname, videos: vidlist, vl: viewlikes });
+            const user = await user_collection.findOne({ _id: mongodb_1.ObjectId(u_id) });
+            const vidlist = await video_collection.aggregate([
+                { $project: { anim: 0 } },
+                {
+                    $lookup: {
+                        from: 'users',
+                        localField: 'user_id',
+                        foreignField: '_id',
+                        as: 'user',
+                    },
+                }
+            ]).toArray();
+            data.username = user;
+            data.total_views = viewlikes[0].total_views;
+            data.total_likes = viewlikes[0].total_likes;
+            data.videos = vidlist;
+            res.send(data);
             client.close();
         });
     });
@@ -49,6 +64,10 @@ app.get('/api/watch', (req, res) => {
 // {+} Загрузка видео: загружает информацию и само видео и возращает video_id
 app.post('/api/upload', (req, res) => {
     const video_payload = req.body;
+    video_payload.likes = 0;
+    video_payload.views = 0;
+    video_payload.user_id = mongodb_1.ObjectId(video_payload.user_id);
+    console.log(video_payload);
     MongoClient.connect(uri, (err, client) => {
         const collection = client.db('anim').collection('videos');
         collection.insertOne(video_payload).then((result) => {
@@ -60,15 +79,24 @@ app.post('/api/upload', (req, res) => {
 // {+} Популярное: возращает 10 видео по убыванию просмотров
 app.get('/api/popular', (req, res) => {
     MongoClient.connect(uri, (err, client) => {
-        const collection = client.db('anim').collection('videos');
-        collection.find().sort({ views: -1 }).limit(10).toArray()
-            .then((data) => {
+        const video_collection = client.db('anim').collection('videos');
+        video_collection.aggregate([
+            { $project: { anim: 0 } },
+            { $sort: { views: -1 } },
+            { $lookup: {
+                    from: 'users',
+                    localField: 'user_id',
+                    foreignField: '_id',
+                    as: 'user',
+                },
+            }
+        ]).limit(10).toArray().then((data) => {
             res.send(data);
             client.close();
         });
     });
 });
-// {+} Засчитать просмотр или лайк
+// {+} Засчитать просмотр или лайк (надо переделать, глупая система подсчета)
 app.post('/api/viewlike', (req, res) => {
     const data = req.body;
     MongoClient.connect(uri, (err, client) => {

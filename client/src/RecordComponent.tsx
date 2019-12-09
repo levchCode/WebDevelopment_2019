@@ -33,7 +33,34 @@ class RecordComponent extends React.Component<any,any> {
 
   upload()
   {
-    //let data = localStorage.getItem("anim");
+    
+    let vid = JSON.parse(localStorage.getItem("anim")||"{}");
+
+    //Как-то получить заголовок, описание  из DescriptionComponent 
+    let video = {
+      title: "Новая загрузка",
+      desc: "Описание",
+      user_id: "5ddad08b1c9d4400003a67b6",
+      thumbnail: "https://i.imgur.com/fEQpO0n.gif",
+      anim: vid
+     }
+
+    fetch('/api/upload', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(video)
+    })
+    .then((resp) => resp.json())
+    .then((data) => {
+      console.log(data)
+    })
+    .catch((error) => {
+      console.log('Request failed', error);
+    });
+
   }
 
   render()
