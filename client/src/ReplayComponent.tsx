@@ -2,7 +2,7 @@ import { createStyles, Theme, withStyles } from "@material-ui/core";
 import React from "react";
 import P5Wrapper from 'react-p5-wrapper';
 import VideoFrame from './sketches/VideoFrame';
-import vid from './data.json';
+import sample from './data.json';
 
 const styles = (theme:Theme) => createStyles({
     root: {
@@ -18,20 +18,23 @@ const styles = (theme:Theme) => createStyles({
 
 class ReplayComponent extends React.Component<any,any> {
 
-    recording:any;
+    state:any;
 
     constructor(props:any){
       super(props);
-      this.recording = this.props;
+      this.state = {vid: []};
     } 
+
+    componentWillReceiveProps(ps:any) {
+      this.setState({vid: ps.vid});
+    }
 
     render()
     {
-      this.recording = vid;
       const { classes } = this.props;
       return (
         <div className={classes.root}>
-          <P5Wrapper sketch={VideoFrame} anim={this.recording.animation}></P5Wrapper>
+          <P5Wrapper sketch={VideoFrame} anim={this.state.vid}></P5Wrapper>
         </div>
       );
     }

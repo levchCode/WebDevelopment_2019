@@ -27,7 +27,7 @@ class VideoComponent extends React.Component<any,any> {
   render() {
     const { classes } = this.props;
     return (
-      <Card className={classes.card} onClick={()=>{window.location.href = "/watch/"+ this.vid.id}}>
+      <Card className={classes.card} onClick={()=>{window.location.href = "/watch/"+ this.vid._id}}>
         <CardActionArea>
           <CardMedia
             className={classes.media}

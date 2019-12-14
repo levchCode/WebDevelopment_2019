@@ -34,22 +34,29 @@ export default function sketch(p:any){
     }
 
     p.draw = () => {
-
-        if (i === anim.length-1) {
-            i = 0;
-        }
-
         p.background(128);
-
-        for (let j = 0; j < anim[i].length; j++) {
-            if (anim[i][j].score > 0.2) {
-                p.fill(255, 255, 255);
-                p.noStroke();
-                p.ellipse(anim[i][j].position.x, anim[i][j].position.y, 10, 10);
+        if (anim.length > 1)
+        {
+            if (i === anim.length-1) {
+                i = 0;
             }
-        }
+
+            
+
+            for (let j = 0; j < anim[i].length; j++) {
+                if (anim[i][j].score > 0.2) {
+                    p.fill(255, 255, 255);
+                    p.noStroke();
+                    p.ellipse(anim[i][j].position.x, anim[i][j].position.y, 10, 10);
+                }
+            }
         
-        if (stopper){ i++; }
+            if (stopper){ i++; }
+        }
+        else
+        {
+            p.text("Нет видео", w/2, h/2);
+        }
     }
 
     p.myCustomRedrawAccordingToNewPropsHandler = function(newProps:any){

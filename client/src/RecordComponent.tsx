@@ -38,10 +38,10 @@ class RecordComponent extends React.Component<any,any> {
 
     //Как-то получить заголовок, описание  из DescriptionComponent 
     let video = {
-      title: "Новая загрузка",
+      title: "Видео9",
       desc: "Описание",
       user_id: "5ddad08b1c9d4400003a67b6",
-      thumbnail: "https://i.imgur.com/fEQpO0n.gif",
+      thumbnail: "https://i.imgur.com/zoZUV38.png",
       anim: vid
      }
 
@@ -56,6 +56,7 @@ class RecordComponent extends React.Component<any,any> {
     .then((resp) => resp.json())
     .then((data) => {
       console.log(data)
+      window.location.href = "/watch/" + data.video_id
     })
     .catch((error) => {
       console.log('Request failed', error);

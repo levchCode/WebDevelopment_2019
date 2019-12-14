@@ -3,7 +3,7 @@ import React from "react";
 import BarComponent from "./BarComponent"
 import ReplayComponent from "./ReplayComponent"
 import DescriptionComponent from "./DescriptionComponent"
-import video from './data.json';
+import video_ex from './data.json';
 
 const styles = (theme:Theme) => createStyles({
     root: {
@@ -19,24 +19,50 @@ const styles = (theme:Theme) => createStyles({
 
 class PlayComponent extends React.Component<any,any> {
 
-    //let params: any = useParams();
     vid: any;
     state: any;
   
     constructor(props:any){
       super(props);
-      this.vid = this.props;
-      //Временно
-      this.vid = video;
+      this.state = {video: video_ex}
     } 
+
+    componentDidMount()
+    {
+      fetch("/api/viewlike",
+      {
+        method:"POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({action: "view", video_id: this.props.match.params.id})
+      }).then(() => {
+
+      fetch("/api/watch",
+      {
+        method:"POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({video_id: this.props.match.params.id})
+      })
+      .then((resp) => resp.json())
+      .then((data) => {
+        this.setState({video: data[0]});
+      })
+      .catch((error) => {
+        console.log('Request failed', error);
+      });
+    });
+    }
 
     render() {
       const { classes } = this.props;
       return (
         <div className={classes.root}>
-          <BarComponent title={this.vid.title}/>
-          <ReplayComponent vid={this.vid.animation}/>
-          <DescriptionComponent editable={false} vid_title={this.vid.title} vid_desc={this.vid.desc} />
+          <BarComponent title={this.state.video.title}/>
+          <ReplayComponent vid={this.state.video.anim}/>
+          <DescriptionComponent editable={false} vid_title={this.state.video.title} vid_desc={this.state.video.desc} />
         </div>
       );
     }

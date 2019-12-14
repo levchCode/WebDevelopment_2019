@@ -58,7 +58,7 @@ app.get('/api/profile', (req: any, res: any) => {
 });
 
 // {+} Просмотр видео: возращает информацию и само видео, по video_id
-app.get('/api/watch', (req: any, res: any) => {
+app.post('/api/watch', (req: any, res: any) => {
 
     const video_id = req.body.video_id;
 

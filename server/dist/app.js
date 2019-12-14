@@ -50,7 +50,7 @@ app.get('/api/profile', (req, res) => {
     });
 });
 // {+} Просмотр видео: возращает информацию и само видео, по video_id
-app.get('/api/watch', (req, res) => {
+app.post('/api/watch', (req, res) => {
     const video_id = req.body.video_id;
     MongoClient.connect(uri, (err, client) => {
         const collection = client.db('anim').collection('videos');
@@ -67,7 +67,6 @@ app.post('/api/upload', (req, res) => {
     video_payload.likes = 0;
     video_payload.views = 0;
     video_payload.user_id = mongodb_1.ObjectId(video_payload.user_id);
-    console.log(video_payload);
     MongoClient.connect(uri, (err, client) => {
         const collection = client.db('anim').collection('videos');
         collection.insertOne(video_payload).then((result) => {
