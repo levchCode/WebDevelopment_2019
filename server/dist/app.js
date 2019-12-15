@@ -12,7 +12,7 @@ const app = express();
 const port = 3001;
 const MongoClient = mg.MongoClient;
 const uri = config_json_1.default.url;
-app.use(express.json());
+app.use(express.json({ limit: '100MB' }));
 app.use(cors());
 app.get('/api/', (req, res) => {
     res.send('Animatr backend, nothing to see here, folks!');

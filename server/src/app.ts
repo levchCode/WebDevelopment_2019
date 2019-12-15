@@ -10,7 +10,7 @@ const port = 3001;
 const MongoClient = mg.MongoClient;
 const uri = config.url;
 
-app.use(express.json());
+app.use(express.json({ limit: '100MB' }));
 app.use(cors());
 
 app.get('/api/', (req: any, res: any) => {
