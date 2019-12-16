@@ -18,7 +18,7 @@ app.get('/api/', (req: any, res: any) => {
 });
 
 // Профиль: должен вернуть имя пользователя, общее кол-во просмотров и лайков и список видео пользователя по user_id
-app.get('/api/profile', (req: any, res: any) => {
+app.post('/api/profile', (req: any, res: any) => {
 
     const data: {[k: string]: any} = {};
     const u_id = req.body.user_id;

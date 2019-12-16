@@ -1,6 +1,7 @@
 import React from 'react';
 import BarComponent from './BarComponent'
 import { Theme, createStyles, withStyles } from '@material-ui/core';
+import VideoSetComponent from './VideoSetComponent';
 
 const styles = (theme:Theme) => createStyles({
   //Сюда задавать классы и прописывать стили (например, см. VideoComponent)
@@ -13,27 +14,38 @@ class ProfileComponent extends React.Component<any,any> {
 
   constructor(props:any){
     super(props);
-    this.state = { data: [] };
+    this.state = { data: { total_views: 0, total_likes: 0, videos: [], username:{username:""}} };
   } 
 
   componentDidMount() {
-    //Разобраться как получить user_id
-    let user_id = "123";
-    //Типо запрос прошел
-    let u_data = {"username": "leVch", "sum_views":11020, "sum_likes": 130, "videos":[
-      {"id":1, "title":"Тест", "username": "leVch", "views":1000, "likes":10, "thumbnail":"https://i.imgur.com/v2zH5xk.jpeg"},
-      {"id":2, "title":"Тест2", "username": "leVch2", "views":10020, "likes":120, "thumbnail":"https://i.imgur.com/81qyN1y.jpg"}
-    ]};
-
-    this.setState({data: u_data});
+    fetch("/api/profile",
+      {
+        method:"POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({user_id: this.props.match.params.user_id})
+      })
+      .then((resp) => resp.json())
+      .then((d) => {
+        this.setState({data: d});
+      })
+      .catch((error) => {
+        console.log('Request failed', error);
+      });
   }
   
   render()
   {
     //const { classes } = this.props;
     return (
-      <BarComponent title={"Профиль: " + this.state.data.username} />
-      // Отобразить суммарно лайки, просмотры и список видео пользователя
+      <div>
+        <BarComponent title={"Профиль: " + this.state.data.username.username} />
+        <p>Всего просмотров: {this.state.data.total_views}</p>
+        <p>Всего лайков: {this.state.data.total_likes}</p>
+        <h1>Видео пользователя</h1>
+        <VideoSetComponent vids={this.state.data.videos}/>
+      </div>
     );
   }
 }

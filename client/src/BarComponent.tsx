@@ -52,7 +52,7 @@ export default function BarComponent(props: any) {
       onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-        {[{text:'Главная', path:'/'}, {text:'Записать анимацию', path:'/record'}, {text:'Профиль', path:'/profile/leVch'}].map((page, index) => (
+        {[{text:'Главная', path:'/'}, {text:'Записать анимацию', path:'/record'}, {text:'Профиль', path:'/profile/5ddad08b1c9d4400003a67b6'}].map((page, index) => (
           <ListItem button key={page.text} onClick={()=>{window.location.href = page.path}}>
             <ListItemText primary={page.text} />
           </ListItem>

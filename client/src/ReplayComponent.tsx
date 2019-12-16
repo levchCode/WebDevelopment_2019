@@ -2,7 +2,6 @@ import { createStyles, Theme, withStyles } from "@material-ui/core";
 import React from "react";
 import P5Wrapper from 'react-p5-wrapper';
 import VideoFrame from './sketches/VideoFrame';
-import sample from './data.json';
 
 const styles = (theme:Theme) => createStyles({
     root: {
