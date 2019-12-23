@@ -8,11 +8,14 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = (theme:Theme) => createStyles({
   card: {
-    maxWidth: 345,
+    width: 200,
   },
   media: {
     height: 140,
   },
+  text:{
+    textOverflow: "ellipsis",
+  }
 });
 
 class VideoComponent extends React.Component<any,any> {
@@ -35,7 +38,7 @@ class VideoComponent extends React.Component<any,any> {
             title="Видео"
           />
           <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
+              <Typography noWrap gutterBottom variant="h5" component="h2">
               {this.vid.title}
               </Typography>
             <Typography variant="body2" color="textSecondary" component="p">

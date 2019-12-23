@@ -20,7 +20,6 @@ app.get('/api/', (req, res) => {
 // Профиль: должен вернуть имя пользователя, общее кол-во просмотров и лайков и список видео пользователя по user_id
 app.post('/api/profile', (req, res) => {
     const data = {};
-    console.log(req.body);
     const u_id = req.body.user_id;
     MongoClient.connect(uri, (err, client) => {
         const video_collection = client.db('anim').collection('videos');

@@ -49,6 +49,7 @@ class PlayComponent extends React.Component<any,any> {
       .then((resp) => resp.json())
       .then((data) => {
         this.setState({video: data[0]});
+        console.log(data[0])
       })
       .catch((error) => {
         console.log('Request failed', error);
@@ -62,6 +63,8 @@ class PlayComponent extends React.Component<any,any> {
         <div className={classes.root}>
           <BarComponent title={this.state.video.title}/>
           <ReplayComponent vid={this.state.video.anim}/>
+          <p>{this.state.video.views} просмотров</p>
+          <p>{this.state.video.likes} лайков</p>
           <DescriptionComponent editable={false} vid_title={this.state.video.title} vid_desc={this.state.video.desc} />
         </div>
       );

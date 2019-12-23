@@ -36,7 +36,7 @@ class RecordComponent extends React.Component<any,any> {
     
     let vid = JSON.parse(localStorage.getItem("anim")||"{}");
 
-    //Как-то получить заголовок, описание  из DescriptionComponent 
+    //Как-то получить заголовок, описание из DescriptionComponent 
     let video = {
       title: "Видео9",
       desc: "Описание",
